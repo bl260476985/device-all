@@ -105,5 +105,6 @@ Route::Group(['namespace' => 'Admin\V1\Telecom', 'prefix' => 'admin/v2/telecom']
     Route::match(['post', 'get'], 'delete/info', ['uses' => 'DeviceController@delete']);//设备更新参数
     Route::match(['post', 'get'], 'device/message', ['uses' => 'MessageController@message']);//消息订阅
     Route::match(['post', 'get'], 'order/send', ['uses' => 'OrderSendController@send']);//消息下发
+    Route::match(['post', 'get'], 'order/result', ['uses' => 'OrderSendController@resultback']);//消息下发结果记录
 });
 

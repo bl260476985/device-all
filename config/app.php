@@ -53,8 +53,9 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-    'app_key' => env('TELECOM_APP_KEY', 'wLK9afqZMc1T0hzL7hY5GzC10Csa'), //电信应用
-    'app_secret' => env('TELECOM_APP_SECRET', '4fy4AbcpvVFBLDoz2c8kOagqcMMa'),
+    'callback_url' => env('APP_CALLBACK_URL', 'http://xiao.nbiotsg.com:18901'),
+    'app_key' => env('TELECOM_APP_KEY', 'biv7_C7QwCrNMNLodp2A_jI99b0a'), //电信应用
+    'app_secret' => env('TELECOM_APP_SECRET', '7yeo0QzwchAF9OJXmCADCbDsTy4a'),
     'app_url' => env('TELECOM_APP_URL', 'https://180.101.147.89:8743'),
     'ca_path' => env('TELECOM_CA_PATH', storage_path('app/public/ca.pem')),
     'private_path' => env('TELECOM_PRIVATE_PATH', storage_path('app/public/key.pem')),

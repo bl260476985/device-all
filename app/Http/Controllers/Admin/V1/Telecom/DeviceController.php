@@ -85,6 +85,7 @@ class DeviceController extends Controller
                     'json' => [
                         'verifyCode' => $nodeId,//验证码与nodeID相同
                         'nodeId' => $nodeId,//设备编码
+                        'timeout' => 86400,//秒
                     ]
                 ]
             );
@@ -167,6 +168,24 @@ class DeviceController extends Controller
         if (!isset($data['device_number']) || empty($data['device_number'])) {
             return $this->fail('设备编号不能为空');
         }
+        if (!isset($data['manufacturerId']) || empty($data['manufacturerId'])) {
+            return $this->fail('厂商id不能为空');
+        }
+        if (!isset($data['manufacturerName']) || empty($data['manufacturerName'])) {
+            return $this->fail('产商名称不能为空');
+        }
+        if (!isset($data['deviceType']) || empty($data['deviceType'])) {
+            return $this->fail('设备类型不能为空');
+        }
+        if (!isset($data['model']) || empty($data['model'])) {
+            return $this->fail('设备型号不能为空');
+        }
+        if (!isset($data['protocolType']) || empty($data['protocolType'])) {
+            return $this->fail('协议类型不能为空');
+        }
+        if (!isset($data['location']) || empty($data['location'])) {
+            return $this->fail('设备位置不能为空');
+        }
         $nodeId = trim($data['device_number']);
         $device = DB::table('device')->select('id', 'device_mini_Id', 'device_name')->where('device_number', $nodeId)->where('is_del', 0)->first();
         if (empty($device)) {
@@ -195,12 +214,12 @@ class DeviceController extends Controller
                     'json' => [
                         'deviceId' => $device_mini_Id,
                         'name' => $device['device_name'],
-                        'manufacturerId' => '',//厂商id
-                        'manufacturerName' => '',//产商名称
-                        'deviceType' => '',//设备类型
-                        'model' => '',//设备型号
-                        'protocolType' => 'CoAP',//协议类型
-                        'timezone' => '',//时区编码
+                        'manufacturerId' => trim($data['manufacturerId']),//厂商id
+                        'manufacturerName' => trim($data['manufacturerName']),//产商名称
+                        'deviceType' => trim($data['deviceType']),//设备类型
+                        'model' => trim($data['model']),//设备型号
+                        'protocolType' => trim($data['protocolType']),//协议类型
+                        'location' => trim($data['location']),//设备位置
                     ]
                 ]
             );
@@ -208,6 +227,9 @@ class DeviceController extends Controller
                 return $this->fail('device update info error');
             }
             $body = json_decode(trim((string)$res->getBody()), true);
+            if (empty($body)) {
+                $body = [];
+            }
             info('device update info response', $body);
         } catch (\Exception $e) {
             logger($e->getMessage());
